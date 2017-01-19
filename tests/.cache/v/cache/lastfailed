@@ -1,3 +1,6 @@
 {
-  "exercise_test.py::test1": true
+  "exercise_test.py::test1": true,
+  "exercise_test.py::test2": true,
+  "exercise_test.py::test3": true,
+  "exercise_test.py::test4": true
 }
