@@ -39,8 +39,7 @@ def test4():
              [1,1,0]]
     end = [[1,0,0],
            [0,1,1],
-           [1,1,0],
-           [0,0,0]]
+           [1,1,0]]
     assert get_generation(start, 40) == end
 
 
@@ -59,6 +58,6 @@ def test5():
            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
            [0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1]]
-    assert get_generation(start, 1000) == end
+    assert get_generation(start, 10) == end
 
 
