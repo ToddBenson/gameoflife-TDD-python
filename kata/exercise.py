@@ -1,44 +1,65 @@
-def cell_exists(row, column, array):
-    return True if 0 <= row < len(array) and 0 <= column < len(array[row]) else False
+def cell_exists(row, column, new_generation):
+    return True if 0 <= row < len(new_generation) and 0 <= column < len(new_generation[row]) else False
 
 
-def get_number_of_active_neighbors(row, column, array):
+def get_number_of_active_neighbors(row, column, new_generation):
     neighbors = [[-1, -1], [-1, 0], [-1, +1], [0, -1], [0, +1], [+1, -1], [+1, 0], [+1, +1]]
-    return sum([array[row + offset[0]][column + offset[1]] for offset in neighbors if
-                cell_exists(row + offset[0], column + offset[1], array)])
+    return sum([new_generation[row + offset[0]][column + offset[1]] for offset in neighbors if
+                cell_exists(row + offset[0], column + offset[1], new_generation)])
 
 
-def set_cell_status(alive_neighbors, current_value):
-    return 1 if alive_neighbors == 3 else current_value if alive_neighbors == 2 else 0
+def set_cell_status(alive_neighbors, current_cell_status):
+    return 1 if alive_neighbors == 3 else current_cell_status if alive_neighbors == 2 else 0
 
 
-def remove_empty_boarders(array):
-    while not any(array[0]):
-        del array[0]
-    while not any(array[-1]):
-        del array[-1]
-    while not any([row[0] for row in array]):
-        map(lambda x: x.pop(0), array)
-    while not any([row[-1] for row in array]):
-        map(lambda x: x.pop(), array)
-    return array
+def remove_empty_first_row(new_generation):
+    while not any(new_generation[0]):
+        del new_generation[0]
+    return new_generation
 
 
-def add_empty_boarders(array):
-    expanded_array = [[0] + column + [0] for column in array]
-    expanded_array.append([0 for column in range(len(expanded_array[0]))])
-    expanded_array.insert(0, [0 for column in range(len(expanded_array[0]))])
+def remove_empty_last_row(new_generation):
+    while not any(new_generation[-1]):
+        del new_generation[-1]
+    return new_generation
+
+
+def remove_empty_boarders(new_generation):
+    while sum([column[-1] for column in new_generation]) == 0:
+        new_generation = [column[:-1] for column in new_generation]
+    while sum([column[0] for column in new_generation]) == 0:
+        new_generation = [column[1:] for column in new_generation]
+    return new_generation
+
+
+def add_empty_left_column(new_generation):
+    return [[0] + column for column in new_generation]
+
+
+def add_empty_right_column(new_generation):
+    return [column + [0] for column in new_generation]
+
+
+def add_empty_first_row(new_generation):
+    expanded_array = [[0 for column in range(len(new_generation[0]))]] + new_generation
     return expanded_array
 
 
-def create_next_generation(array):
-    next_generation = [[set_cell_status(get_number_of_active_neighbors(row, column, array), array[row][column])
-                       for column in range(len(array[row]))
-                       if cell_exists(row, column, array)]
-                       for row in range(len(array))]
+def add_empty_last_row(new_generation):
+    expanded_array = new_generation + [[0 for column in range(len(new_generation[0]))]]
+    return expanded_array
+
+
+def create_next_generation(new_generation):
+    next_generation = [[set_cell_status(get_number_of_active_neighbors(row, column, new_generation),
+                                        new_generation[row][column])
+                        for column in range(len(new_generation[row]))
+                        if cell_exists(row, column, new_generation)]
+                       for row in range(len(new_generation))]
     return next_generation
 
 
 def get_generation(cells, generation):
-    current_generation = remove_empty_boarders(create_next_generation(add_empty_boarders(cells)))
+    current_generation = remove_empty_first_row(remove_empty_last_row(remove_empty_boarders(create_next_generation(
+        add_empty_last_row(add_empty_first_row(add_empty_right_column(add_empty_left_column(cells))))))))
     return current_generation if generation <= 1 else get_generation(current_generation, generation - 1)

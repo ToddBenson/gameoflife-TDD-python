@@ -1,10 +1,15 @@
 """test the kata task"""
-from exercise import add_empty_boarders
 from exercise import cell_exists
 from exercise import get_generation
 from exercise import get_number_of_active_neighbors
 from exercise import remove_empty_boarders
 from exercise import set_cell_status
+from exercise import add_empty_first_row
+from exercise import add_empty_last_row
+from exercise import add_empty_left_column
+from exercise import add_empty_right_column
+from exercise import remove_empty_first_row
+from exercise import remove_empty_last_row
 
 
 def test1():
@@ -97,24 +102,22 @@ def test9():
     start = [[1, 1, 1],
              [1, 1, 1],
              [1, 1, 1]]
-    end = [[0, 0, 0, 0, 0],
-           [0, 1, 1, 1, 0],
-           [0, 1, 1, 1, 0],
-           [0, 1, 1, 1, 0],
-           [0, 0, 0, 0, 0]]
-    assert add_empty_boarders(start) == end
+    end = [[0, 0, 0],
+           [1, 1, 1],
+           [1, 1, 1],
+           [1, 1, 1]]
+    assert add_empty_first_row(start) == end
 
 
 def test10():
+    start = [[1, 1, 1],
+             [1, 1, 1],
+             [1, 1, 1]]
     end = [[1, 1, 1],
            [1, 1, 1],
-           [1, 1, 1]]
-    start = [[0, 0, 0, 0, 0],
-             [0, 1, 1, 1, 0],
-             [0, 1, 1, 1, 0],
-             [0, 1, 1, 1, 0],
-             [0, 0, 0, 0, 0]]
-    assert remove_empty_boarders(start) == end
+           [1, 1, 1],
+           [0, 0, 0]]
+    assert add_empty_last_row(start) == end
 
 
 def test11():
@@ -163,3 +166,55 @@ def test17():
              [0, 1, 1, 1, 0],
              [0, 0, 0, 0, 0]]
     assert cell_exists(4, 4, start) is True
+
+
+def test18():
+    end = [[1, 1, 1],
+           [1, 1, 1],
+           [1, 1, 1]]
+    start = [[0, 1, 1, 1, 0],
+             [0, 1, 1, 1, 0],
+             [0, 1, 1, 1, 0]]
+    assert remove_empty_boarders(start) == end
+
+
+def test19():
+    start = [[1, 1, 1],
+             [1, 1, 1],
+             [1, 1, 1]]
+    end = [[0, 1, 1, 1],
+           [0, 1, 1, 1],
+           [0, 1, 1, 1]]
+    assert add_empty_left_column(start) == end
+
+
+def test20():
+    start = [[1, 1, 1],
+             [1, 1, 1],
+             [1, 1, 1]]
+    end = [[1, 1, 1, 0],
+           [1, 1, 1, 0],
+           [1, 1, 1, 0]]
+    assert add_empty_right_column(start) == end
+
+
+def test21():
+    end = [[1, 1, 1],
+           [1, 1, 1],
+           [1, 1, 1]]
+    start = [[1, 1, 1],
+             [1, 1, 1],
+             [1, 1, 1],
+             [0, 0, 0]]
+    assert remove_empty_last_row(start) == end
+
+
+def test22():
+    end = [[1, 1, 1],
+           [1, 1, 1],
+           [1, 1, 1]]
+    start = [[0, 0, 0, ],
+             [1, 1, 1],
+             [1, 1, 1],
+             [1, 1, 1]]
+    assert remove_empty_first_row(start) == end
