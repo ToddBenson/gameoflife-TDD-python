@@ -1,11 +1,11 @@
 
 """test the kata task"""
-from exercise import get_generation
 from exercise import add_empty_boarders
+from exercise import cell_exists
+from exercise import get_generation
+from exercise import get_number_of_active_neighbors
 from exercise import remove_empty_boarders
 from exercise import set_cell_status
-from exercise import get_number_of_active_neighbors
-from exercise import cell_exists
 
 
 def test1():
