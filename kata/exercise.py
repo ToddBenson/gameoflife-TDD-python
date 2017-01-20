@@ -13,10 +13,14 @@ def set_cell_status(alive_neighbors, current_value):
 
 
 def remove_empty_boarders(array):
-    while not any(array[0]): del array[0]
-    while not any(array[-1]): del array[-1]
-    while not any([row[0] for row in array]): map(lambda x: x.pop(0), array)
-    while not any([row[-1] for row in array]): map(lambda x: x.pop(), array)
+    while not any(array[0]):
+        del array[0]
+    while not any(array[-1]):
+        del array[-1]
+    while not any([row[0] for row in array]):
+        map(lambda x: x.pop(0), array)
+    while not any([row[-1] for row in array]):
+        map(lambda x: x.pop(), array)
     return array
 
 
