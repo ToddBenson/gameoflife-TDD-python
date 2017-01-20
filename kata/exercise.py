@@ -1,57 +1,38 @@
-def get_generation(cells, generation):
+def get_generation(current_generation, generation):
 
     for counter in range(0, generation):
 
         def cell_exists(r, c):
-            return True if 0 <= r < len(cells) and 0 <= c < len(cells[r]) else False
+            return True if 0 <= r < len(current_generation) and 0 <= c < len(current_generation[r]) else False
 
-        def get_active_neighbors(r, c):
+        def get_active_neighbors(row, column):
             neighbors = [[-1, -1], [-1, 0], [-1, +1], [0, -1], [0, +1], [+1, -1], [+1, 0], [+1, +1]]
-            return sum([cells[r + x[0]][c + x[1]] for x in neighbors if cell_exists(r + x[0], c + x[1])])
+            return sum([current_generation[row + x[0]][column + x[1]] for x in neighbors if cell_exists(row + x[0], column + x[1])])
 
-        def set_value(neighbors, current):
-            if neighbors == 3:
-                return 1
-            if neighbors == 2:
-                return current
-            return 0
+        def set_alive_or_dead(alive_neighbors, current_value):
+            return 1 if alive_neighbors == 3 else current_value if alive_neighbors == 2 else 0
 
-        def add_rows(add_bottom_row_array):
-            if 3 in [get_active_neighbors(len(add_bottom_row_array), x) for x in range(len(add_bottom_row_array[0]))]:
-                add_bottom_row_array.append([set_value(get_active_neighbors((len(add_bottom_row_array) + 1), cell), 0)
-                                             for cell in range(len(add_bottom_row_array[0]))])
+        def clean_up(array):
+            while not any(array[0]): del array[0]
+            while not any(array[-1]): del array[-1]
+            while not any([row[0] for row in array]): map(lambda x: x.pop(0), array)
+            while not any([row[-1] for row in array]): map(lambda x: x.pop(), array)
+            return array
 
-            if 3 in [get_active_neighbors(- 1, x) for x in range(len(add_bottom_row_array[0]))]:
-                row_to_add = [0 for x in range(len(add_bottom_row_array[0]))]
-                add_bottom_row_array.insert(0, row_to_add)
-            return add_bottom_row_array
+        def expand(array):
+            array = [[0] + column + [0] for column in array]
+            array.append([0 for column in range(len(array[0]))])
+            array.insert(0, [0 for column in range(len(array[0]))])
+            return array
 
-        def clean_up(clean_up_array):
-            if sum(clean_up_array[0]) == 0:
-                clean_up_array = clean_up_array[1:]
-            if sum(clean_up_array[-1]) == 0:
-                clean_up_array = clean_up_array[:-1]
-            if sum([x[0] for x in clean_up_array]) == 0:
-                clean_up_array = [x[1:] for x in clean_up_array]
-            return clean_up_array
+        def create_next_generation(array):
+            array = [[set_alive_or_dead(get_active_neighbors(row, column), array[row][column])
+                      for column in range(len(array[row]))
+                      if cell_exists(row, column)]
+                     for row in range(len(array))]
+            return clean_up(array)
 
-        def add_columns(add_column_array):
-            if 3 in [get_active_neighbors(r, len(add_column_array[0])) for r in range(len(add_column_array))]:
-                add_column_array = [x + [0] for x in add_column_array]
+        current_generation = expand(current_generation)
+        current_generation = create_next_generation(current_generation)
 
-            if 3 in [get_active_neighbors(x, -1) for x in range(len(add_column_array))]:
-                for row in add_column_array:
-                    row.insert(0,0)
-            return add_column_array
-
-        def generate(generate_array):
-            generate_array = [[set_value(get_active_neighbors(row, cell), generate_array[row][cell])
-                               for cell in range(len(generate_array[row]))
-                               if cell_exists(row, cell)]
-                              for row in range(len(generate_array))]
-            return clean_up(generate_array)
-
-        cells = add_columns(cells)
-        cells = add_rows(cells)
-        cells = generate(cells)
-    return cells
+    return current_generation
