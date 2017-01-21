@@ -13,23 +13,30 @@ def set_cell_status(alive_neighbors, current_cell_status):
 
 
 def remove_empty_first_row(new_generation):
-    while not any(new_generation[0]):
-        del new_generation[0]
-    return new_generation
+    return new_generation if sum(new_generation[0]) != 0 else remove_empty_first_row(new_generation[1:])
 
 
 def remove_empty_last_row(new_generation):
-    while not any(new_generation[-1]):
-        del new_generation[-1]
-    return new_generation
+    return new_generation if sum(new_generation[-1]) != 0 else remove_empty_last_row(new_generation[:-1])
+
+
+def remove_empty_left_column(new_generation):
+    return new_generation if sum([column[0] for column in new_generation]) != 0 else remove_empty_left_column(
+        [column[1:] for column in new_generation])
+
+
+def remove_empty_right_column(new_generation):
+    return new_generation if sum([column[-1] for column in new_generation]) != 0 else remove_empty_right_column(
+        [column[:-1] for column in new_generation])
 
 
 def remove_empty_boarders(new_generation):
-    while sum([column[-1] for column in new_generation]) == 0:
-        new_generation = [column[:-1] for column in new_generation]
-    while sum([column[0] for column in new_generation]) == 0:
-        new_generation = [column[1:] for column in new_generation]
-    return new_generation
+    return remove_empty_left_column(
+        remove_empty_right_column(remove_empty_last_row(remove_empty_first_row(new_generation))))
+
+
+def add_empty_boarders(new_generation):
+    return add_empty_right_column(add_empty_left_column(add_empty_last_row(add_empty_first_row(new_generation))))
 
 
 def add_empty_left_column(new_generation):
@@ -41,13 +48,11 @@ def add_empty_right_column(new_generation):
 
 
 def add_empty_first_row(new_generation):
-    expanded_array = [[0 for column in range(len(new_generation[0]))]] + new_generation
-    return expanded_array
+    return [[0] * len(new_generation[0])] + new_generation
 
 
 def add_empty_last_row(new_generation):
-    expanded_array = new_generation + [[0 for column in range(len(new_generation[0]))]]
-    return expanded_array
+    return new_generation + [[0] * len(new_generation[0])]
 
 
 def create_next_generation(new_generation):
@@ -60,6 +65,5 @@ def create_next_generation(new_generation):
 
 
 def get_generation(cells, generation):
-    current_generation = remove_empty_first_row(remove_empty_last_row(remove_empty_boarders(create_next_generation(
-        add_empty_last_row(add_empty_first_row(add_empty_right_column(add_empty_left_column(cells))))))))
+    current_generation = remove_empty_boarders(create_next_generation(add_empty_boarders(cells)))
     return current_generation if generation <= 1 else get_generation(current_generation, generation - 1)
