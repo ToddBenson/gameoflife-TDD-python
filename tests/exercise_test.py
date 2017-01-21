@@ -1,18 +1,5 @@
 """test the kata task"""
-from exercise import add_empty_boarders
-from exercise import add_empty_first_row
-from exercise import add_empty_last_row
-from exercise import add_empty_left_column
-from exercise import add_empty_right_column
-from exercise import cell_exists
-from exercise import get_generation
-from exercise import get_number_of_active_neighbors
-from exercise import remove_empty_boarders
-from exercise import remove_empty_first_row
-from exercise import remove_empty_last_row
-from exercise import set_cell_status
-from exercise import remove_empty_left_column
-from exercise import remove_empty_right_column
+import exercise
 
 
 def test1():
@@ -22,7 +9,7 @@ def test1():
     end = [[0, 1, 0],
            [0, 0, 1],
            [1, 1, 1]]
-    assert get_generation(start, 1) == end
+    assert exercise.get_generation(start, 1) == end
 
 
 def test2():
@@ -32,7 +19,7 @@ def test2():
     end = [[1, 0, 1],
            [0, 1, 1],
            [0, 1, 0]]
-    assert get_generation(start, 2) == end
+    assert exercise.get_generation(start, 2) == end
 
 
 def test3():
@@ -42,7 +29,7 @@ def test3():
     end = [[0, 0, 1],
            [1, 0, 1],
            [0, 1, 1]]
-    assert get_generation(start, 3) == end
+    assert exercise.get_generation(start, 3) == end
 
 
 def test4():
@@ -52,7 +39,7 @@ def test4():
     end = [[1, 0, 0],
            [0, 1, 1],
            [1, 1, 0]]
-    assert get_generation(start, 40) == end
+    assert exercise.get_generation(start, 40) == end
 
 
 def test5():
@@ -68,7 +55,7 @@ def test5():
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]]
-    assert get_generation(start, 10) == end
+    assert exercise.get_generation(start, 10) == end
 
 
 def test6():
@@ -76,7 +63,7 @@ def test6():
              [1],
              [1]]
     end = [[1, 1, 1]]
-    assert get_generation(start, 5) == end
+    assert exercise.get_generation(start, 5) == end
 
 
 def test7():
@@ -90,7 +77,7 @@ def test7():
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
     end = [[1, 1, 1]]
-    assert get_generation(start, 1) == end
+    assert exercise.get_generation(start, 911) == end
 
 
 def test8():
@@ -98,7 +85,7 @@ def test8():
     end = [[0, 1, 1, 0],
            [1, 0, 0, 1],
            [0, 1, 1, 0]]
-    assert get_generation(start, 40) == end
+    assert exercise.get_generation(start, 40) == end
 
 
 def test9():
@@ -109,7 +96,7 @@ def test9():
            [1, 1, 1],
            [1, 1, 1],
            [1, 1, 1]]
-    assert add_empty_first_row(start) == end
+    assert exercise.add_empty_first_row(start) == end
 
 
 def test10():
@@ -120,19 +107,19 @@ def test10():
            [1, 1, 1],
            [1, 1, 1],
            [0, 0, 0]]
-    assert add_empty_last_row(start) == end
+    assert exercise.add_empty_last_row(start) == end
 
 
 def test11():
-    assert set_cell_status(1, 1) == 0
+    assert exercise.set_cell_status(1, 1) == 0
 
 
 def test12():
-    assert set_cell_status(2, 1) == 1
+    assert exercise.set_cell_status(2, 1) == 1
 
 
 def test13():
-    assert set_cell_status(3, 0) == 1
+    assert exercise.set_cell_status(3, 0) == 1
 
 
 def test14():
@@ -141,7 +128,7 @@ def test14():
              [0, 1, 1, 1, 0],
              [0, 1, 1, 1, 0],
              [0, 0, 0, 0, 0]]
-    assert get_number_of_active_neighbors(1, 1, start) == 3
+    assert exercise.get_number_of_active_neighbors(1, 1, start) == 3
 
 
 def test15():
@@ -150,7 +137,7 @@ def test15():
              [0, 1, 1, 1, 0],
              [0, 1, 1, 1, 0],
              [0, 0, 0, 0, 0]]
-    assert get_number_of_active_neighbors(4, 4, start) == 1
+    assert exercise.get_number_of_active_neighbors(4, 4, start) == 1
 
 
 def test16():
@@ -159,7 +146,7 @@ def test16():
              [0, 1, 1, 1, 0],
              [0, 1, 1, 1, 0],
              [0, 0, 0, 0, 0]]
-    assert cell_exists(5, 5, start) is False
+    assert exercise.cell_exists(5, 5, start) is False
 
 
 def test17():
@@ -168,7 +155,7 @@ def test17():
              [0, 1, 1, 1, 0],
              [0, 1, 1, 1, 0],
              [0, 0, 0, 0, 0]]
-    assert cell_exists(4, 4, start) is True
+    assert exercise.cell_exists(4, 4, start) is True
 
 
 def test18():
@@ -180,7 +167,7 @@ def test18():
              [0, 1, 1, 1, 0],
              [0, 1, 1, 1, 0],
              [0, 0, 0, 0, 0]]
-    assert remove_empty_boarders(start) == end
+    assert exercise.remove_empty_boarders(start) == end
 
 
 def test19():
@@ -190,7 +177,7 @@ def test19():
     end = [[0, 1, 1, 1],
            [0, 1, 1, 1],
            [0, 1, 1, 1]]
-    assert add_empty_left_column(start) == end
+    assert exercise.add_empty_left_column(start) == end
 
 
 def test20():
@@ -200,7 +187,7 @@ def test20():
     end = [[1, 1, 1, 0],
            [1, 1, 1, 0],
            [1, 1, 1, 0]]
-    assert add_empty_right_column(start) == end
+    assert exercise.add_empty_right_column(start) == end
 
 
 def test21():
@@ -211,7 +198,7 @@ def test21():
              [1, 1, 1],
              [1, 1, 1],
              [0, 0, 0]]
-    assert remove_empty_last_row(start) == end
+    assert exercise.remove_empty_last_row(start) == end
 
 
 def test22():
@@ -222,7 +209,7 @@ def test22():
              [1, 1, 1],
              [1, 1, 1],
              [1, 1, 1]]
-    assert remove_empty_first_row(start) == end
+    assert exercise.remove_empty_first_row(start) == end
 
 
 def test23():
@@ -234,7 +221,7 @@ def test23():
            [0, 1, 1, 1, 0],
            [0, 1, 1, 1, 0],
            [0, 0, 0, 0, 0]]
-    assert add_empty_boarders(start) == end
+    assert exercise.add_empty_boarders(start) == end
 
 
 def test24():
@@ -244,7 +231,7 @@ def test24():
     start = [[0, 1, 1, 1],
              [0, 1, 1, 1],
              [0, 1, 1, 1]]
-    assert remove_empty_left_column(start) == end
+    assert exercise.remove_empty_left_column(start) == end
 
 
 def test25():
@@ -254,4 +241,4 @@ def test25():
     start = [[1, 1, 1, 0],
              [1, 1, 1, 0],
              [1, 1, 1, 0]]
-    assert remove_empty_right_column(start) == end
+    assert exercise.remove_empty_right_column(start) == end

@@ -56,14 +56,11 @@ def add_empty_last_row(new_generation):
 
 
 def create_next_generation(new_generation):
-    next_generation = [[set_cell_status(get_number_of_active_neighbors(row, column, new_generation),
-                                        new_generation[row][column])
-                        for column in range(len(new_generation[row]))
-                        if cell_exists(row, column, new_generation)]
-                       for row in range(len(new_generation))]
-    return next_generation
+    return [[set_cell_status(get_number_of_active_neighbors(row, column, new_generation), new_generation[row][column])
+             for column in range(len(new_generation[row]))] for row in range(len(new_generation))]
 
 
 def get_generation(cells, generation):
-    current_generation = remove_empty_boarders(create_next_generation(add_empty_boarders(cells)))
-    return current_generation if generation <= 1 else get_generation(current_generation, generation - 1)
+    return remove_empty_boarders(
+        create_next_generation(add_empty_boarders(cells))) if generation <= 1 else get_generation(
+        remove_empty_boarders(create_next_generation(add_empty_boarders(cells))), generation - 1)
