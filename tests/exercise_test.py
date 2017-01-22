@@ -1,5 +1,6 @@
 """test the kata task"""
 import game_of_life
+import grid
 
 
 def test11():
@@ -57,7 +58,7 @@ def test19():
     end = [[0, 1, 1, 1],
            [0, 1, 1, 1],
            [0, 1, 1, 1]]
-    assert game_of_life.add_empty_left_column(start) == end
+    assert grid.add_empty_left_column(start) == end
 
 
 def test20():
@@ -67,7 +68,7 @@ def test20():
     end = [[1, 1, 1, 0],
            [1, 1, 1, 0],
            [1, 1, 1, 0]]
-    assert game_of_life.add_empty_right_column(start) == end
+    assert grid.add_empty_right_column(start) == end
 
 
 def test9():
@@ -78,7 +79,7 @@ def test9():
            [1, 1, 1],
            [1, 1, 1],
            [1, 1, 1]]
-    assert game_of_life.add_empty_first_row(start) == end
+    assert grid.add_empty_first_row(start) == end
 
 
 def test10():
@@ -89,7 +90,7 @@ def test10():
            [1, 1, 1],
            [1, 1, 1],
            [0, 0, 0]]
-    assert game_of_life.add_empty_last_row(start) == end
+    assert grid.add_empty_last_row(start) == end
 
 
 def test21():
@@ -100,7 +101,7 @@ def test21():
              [1, 1, 1],
              [1, 1, 1],
              [0, 0, 0]]
-    assert game_of_life.remove_empty_last_row(start) == end
+    assert grid.remove_empty_last_row(start) == end
 
 
 def test22():
@@ -111,7 +112,7 @@ def test22():
              [1, 1, 1],
              [1, 1, 1],
              [1, 1, 1]]
-    assert game_of_life.remove_empty_first_row(start) == end
+    assert grid.remove_empty_first_row(start) == end
 
 
 def test24():
@@ -121,7 +122,7 @@ def test24():
     start = [[0, 1, 1, 1],
              [0, 1, 1, 1],
              [0, 1, 1, 1]]
-    assert game_of_life.remove_empty_left_column(start) == end
+    assert grid.remove_empty_left_column(start) == end
 
 
 def test25():
@@ -131,7 +132,7 @@ def test25():
     start = [[1, 1, 1, 0],
              [1, 1, 1, 0],
              [1, 1, 1, 0]]
-    assert game_of_life.remove_empty_right_column(start) == end
+    assert grid.remove_empty_right_column(start) == end
 
 
 def test18():
@@ -143,7 +144,7 @@ def test18():
              [0, 1, 1, 1, 0],
              [0, 1, 1, 1, 0],
              [0, 0, 0, 0, 0]]
-    assert game_of_life.remove_empty_boarders(start) == end
+    assert grid.remove_empty_boarders(start) == end
 
 
 def test23():
@@ -155,7 +156,17 @@ def test23():
            [0, 1, 1, 1, 0],
            [0, 1, 1, 1, 0],
            [0, 0, 0, 0, 0]]
-    assert game_of_life.add_empty_boarders(start) == end
+    assert grid.add_empty_boarders(start) == end
+
+
+def test27():
+    start = [[1, 0, 0],
+             [0, 1, 1],
+             [1, 1, 0]]
+    end = [[0, 1, 0],
+           [0, 0, 1],
+           [1, 1, 1]]
+    assert game_of_life.create_next_generation(start) == end
 
 
 def test1():
@@ -233,7 +244,7 @@ def test7():
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
     end = [[1, 1, 1]]
-    assert game_of_life.get_generation(start, 911) == end
+    assert game_of_life.get_generation(start, 101) == end
 
 
 def test8():
