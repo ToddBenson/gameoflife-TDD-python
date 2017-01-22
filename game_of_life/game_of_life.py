@@ -1,3 +1,6 @@
+import sys
+
+
 def cell_exists(row, column, new_generation):
     return True if 0 <= row < len(new_generation) and 0 <= column < len(new_generation[row]) else False
 
@@ -64,3 +67,13 @@ def get_generation(cells, generation):
     return remove_empty_boarders(
         create_next_generation(add_empty_boarders(cells))) if generation <= 1 else get_generation(
         remove_empty_boarders(create_next_generation(add_empty_boarders(cells))), generation - 1)
+
+
+def main(args):
+    return get_generation(args[0], args[1])
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
+
+
