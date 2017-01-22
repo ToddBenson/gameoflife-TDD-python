@@ -24,13 +24,13 @@ def remove_empty_last_row(new_generation):
 
 
 def remove_empty_left_column(new_generation):
-    return new_generation if sum([column[0] for column in new_generation]) != 0 else remove_empty_left_column(
-        [column[1:] for column in new_generation])
+    return new_generation if sum(map(lambda x: int(x[0]), new_generation)) != 0 else remove_empty_left_column(
+        map(lambda x: x[1:], new_generation))
 
 
 def remove_empty_right_column(new_generation):
-    return new_generation if sum([column[-1] for column in new_generation]) != 0 else remove_empty_right_column(
-        [column[:-1] for column in new_generation])
+    return new_generation if sum(map(lambda x: int(x[-1]), new_generation)) != 0 else remove_empty_right_column(
+        map(lambda x: x[:-1], new_generation))
 
 
 def remove_empty_boarders(new_generation):
@@ -43,11 +43,11 @@ def add_empty_boarders(new_generation):
 
 
 def add_empty_left_column(new_generation):
-    return [[0] + column for column in new_generation]
+    return map(lambda x: [0] + x, new_generation)
 
 
 def add_empty_right_column(new_generation):
-    return [column + [0] for column in new_generation]
+    return map(lambda x: x + [0], new_generation)
 
 
 def add_empty_first_row(new_generation):
